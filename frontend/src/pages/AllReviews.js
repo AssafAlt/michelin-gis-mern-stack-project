@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import { axiosInstance } from "../config/axiosConfig";
 import ReviewCard from "../components/ui/ReviewCard";
 
 const AllReviews = () => {
   const [reviews, setReviews] = useState();
   const location = useLocation();
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const response = await axios.post(
-        `http://localhost:5000/reviews/allreviews?restId=${location.state.id}`
-      );
-      await setReviews(response.data);
-    };
-    fetchReviews();
-  }, []);
+  useEffect(
+    () => {
+      const fetchReviews = async () => {
+        const response = await axiosInstance.post(
+          `/reviews/allreviews?restId=${location.state.id}`
+        );
+        await setReviews(response.data);
+      };
+      fetchReviews();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   return (
     <div>

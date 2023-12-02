@@ -1,5 +1,5 @@
-import React, { useEffect, Suspense, lazy } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";

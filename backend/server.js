@@ -3,10 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const passport = require("passport");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const Rest = require("./models/restModel");
 const authRoute = require("./routes/authRoute");
 const reviewRoute = require("./routes/reviewRoute");
 const filterRoute = require("./routes/filterRoute");
@@ -46,6 +46,7 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -55,9 +56,11 @@ app.use("/auth", authRoute);
 app.use("/reviews", reviewRoute);
 app.use("/filters", filterRoute);
 app.use("/addrest", addRestRoute);
+app.get("/rests", getRests);
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
 
-app.get("/", getRests);
-
-app.listen(process.env.PORT, (req, res) => {
+app.listen(process.env.PORT, () => {
   console.log(`Server running on port: ${process.env.PORT}`);
 });

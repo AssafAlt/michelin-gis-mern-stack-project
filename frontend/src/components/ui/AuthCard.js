@@ -15,15 +15,19 @@ const AuthCard = (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, isSuccess, isError } = useSelector((state) => state.auth);
+  const { isSuccess, isError } = useSelector((state) => state.auth);
   const onSubmit = (data) => {
     dispatch(props.dispatcher(data));
   };
-  useEffect(() => {
-    return () => {
-      dispatch(reset());
-    };
-  }, []);
+  useEffect(
+    () => {
+      return () => {
+        dispatch(reset());
+      };
+    },
+    // eslint-disable-next-line
+    []
+  );
   useEffect(() => {
     if (isError) {
       toast.error(props.errorMessage);
@@ -34,7 +38,15 @@ const AuthCard = (props) => {
       dispatch(reset());
       navigate(props.afterSuccess);
     }
-  }, [isSuccess, isError, navigate, dispatch]);
+  }, [
+    isSuccess,
+    isError,
+    navigate,
+    dispatch,
+    props.errorMessage,
+    props.successMessage,
+    props.afterSuccess,
+  ]);
   return (
     <div className="h-[100%]  flex justify-center">
       <div className="py-6 px-8 max-2-sm max-2-lg mt-10 rounded shadow-xl border border-blue-500">

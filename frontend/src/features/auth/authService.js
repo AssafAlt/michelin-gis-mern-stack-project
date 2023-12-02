@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/auth";
+import { axiosInstance } from "../../config/axiosConfig";
 
 //Register user
 const registerUser = async ({ username, password }) => {
-  const res = await axios.post(API_URL + "/register", {
+  const res = await axiosInstance.post("/auth/register", {
     username,
     password,
   });
@@ -15,7 +13,7 @@ const registerUser = async ({ username, password }) => {
 };
 
 const login = async ({ username, password }) => {
-  const res = await axios.post(API_URL + "/login", { username, password });
+  const res = await axiosInstance.post("/auth/login", { username, password });
   if (res.data) {
     const user = res.data;
     localStorage.setItem("user", JSON.parse(JSON.stringify(user)));
@@ -24,7 +22,7 @@ const login = async ({ username, password }) => {
 };
 
 const logout = async () => {
-  const res = await axios.post(API_URL + "/logout", {});
+  const res = await axiosInstance.post("/auth/logout", {});
   if (res) {
     localStorage.removeItem("user");
     console.log(res);

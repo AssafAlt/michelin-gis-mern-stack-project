@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/addrest/";
+import { axiosInstance } from "../../config/axiosConfig";
 
 //Add New Restaurant
 const addRest = async ({
@@ -13,7 +11,7 @@ const addRest = async ({
   url,
   stars,
 }) => {
-  const res = await axios.post(API_URL, {
+  const res = await axiosInstance.post("/addrest", {
     name,
     latitude,
     longitude,

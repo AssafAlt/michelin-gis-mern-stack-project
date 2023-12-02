@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { MapContainer, TileLayer } from "react-leaflet";
 
-import axios from "axios";
+import { axiosInstance } from "../config/axiosConfig";
 import FilterTable from "../components/ui/FilterTable";
 import PointsCreator from "../components/points/PointsCreator";
 
@@ -18,17 +18,21 @@ const Map = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(user);
-    if (!user) {
-      navigate("/");
-    }
-    const fetchData = async () => {
-      const response = await axios("http://localhost:5000/");
-      await setRestaurantes(response.data);
-    };
-    fetchData();
-  }, [filteredRests]);
+  useEffect(
+    () => {
+      console.log(user);
+      if (!user) {
+        navigate("/");
+      }
+      const fetchData = async () => {
+        const response = await axiosInstance("/rests");
+        await setRestaurantes(response.data);
+      };
+      fetchData();
+    },
+    // eslint-disable-next-line
+    [filteredRests]
+  );
 
   return (
     <div>

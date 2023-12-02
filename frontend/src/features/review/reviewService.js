@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/reviews";
+import { axiosInstance } from "../../config/axiosConfig";
 
 //Add review
 const addReview = async ({ reviewerName, review, restId }) => {
-  const res = await axios.post(API_URL + "/addreview", {
+  const res = await axiosInstance.post("/reviews/addreview", {
     reviewerName,
     review,
     restId,
